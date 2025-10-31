@@ -1,104 +1,140 @@
-# Banking Portal Rest API Using Spring Boot & Spring Security
+# Banking Portal API
 
-## Fork and Star ⭐ Github Repo For New Feature Update
+Lightweight Spring Boot backend for a demo banking portal. Provides account management, authentication (OTP + PIN), transactions, and admin endpoints. Intended as a sample/starting point for building banking-style APIs.
 
-[![GitHub Repo](https://img.shields.io/badge/GitHub-UI%20Repo-blue.svg?style=flat-square)](https://github.com/abhi9720/BankingPortal-UI)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-API%20Repo-blue.svg?style=flat-square)](https://github.com/abhi9720/BankingPortal-API)
+## Table of contents
 
-## API Documentation
-
-- [https://github.com/abhi9720/BankingPortal-API/wiki](https://github.com/abhi9720/BankingPortal-API/wiki)
-
-## Banking Portal UI
-
-- [https://github.com/abhi9720/BankingPortal-UI](https://github.com/abhi9720/BankingPortal-UI)
-
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/237694d9-6e8d-48e8-a7a2-982b9f8ca671)
-
-***
-
-The Banking Portal API provides a set of endpoints for managing user accounts, fund transfers, and transactions. This project aims to facilitate secure and efficient banking operations for users.
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Quick start](#quick-start)
+- [Configuration](#configuration)
+- [API documentation](#api-documentation)
+- [Testing](#testing)
+- [Postman collection](#postman-collection)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
-- User Registration: Users can register by providing their details, such as name, email, address, and phone number.
-- PIN Management: Users can create and update their PINs for added security.
-- Cash Deposit and Withdrawal: Users can deposit and withdraw cash from their accounts.
-- Fund Transfer: Users can transfer funds to other accounts within the system.
-- Transaction History: Users can view their transaction history.
+- User registration, authentication, and password reset
+- Account management and balance queries
+- Fund transfers and transaction history
+- OTP handling with retry limits and PIN management
+- JWT-based authentication
+- OpenAPI/Swagger UI for interactive API exploration
 
-## Technologies Used
+## Tech stack
 
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/31896d20-16d9-4fe1-a534-0490841de4b9)
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/c09bc4ac-c0ca-4f7c-9c6e-8eb9818eb35b)
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/78c75fff-e8a8-49c6-9897-34b08b2c9308)
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/3647613e-1d6e-4bc4-98b6-2da5648659f9)
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/8a5c0b00-776b-444e-bc24-36fc6bfe4c41)
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/b56a7167-6a3a-49a0-8b8a-8a4e3e71a383)
-![image](https://github.com/abhi9720/BankingPortal-API/assets/68281476/b5c86e65-cbe8-400a-afeb-895846601da7)
+- Java 17
+- Spring Boot 3.3.x
+- Spring Data JPA (MySQL)
+- Spring Security + JWT
+- Spring Mail (for email flows)
+- SpringDoc OpenAPI (Swagger UI)
+- Maven build
 
-## TODO
+## Prerequisites
 
-- UI Fix for Dashboard Charts
-- Pagination in table
-- Save JWT Token in db and remove on logout
-- Email trigger on account login
-- Send Bank Statement on Email
+- Java 17 (JDK 17)
+- Maven (or use the included Maven wrapper)
+- MySQL (or another JDBC-compatible database)
 
-## Installation and Setup
+## Quick start
 
-1. Clone the repository: `git clone https://github.com/yourusername/banking-portal-api.git`
-2. Navigate to the project folder: `cd banking-portal-api`
-3. Configure MySQL: Set up a MySQL database, create a copy of `application.properties.sample`, rename it `application.properties`, and update the properties as needed.
-4. Build and run the project: `mvn spring-boot:run`
+1. Clone the repository
 
-## Screenshots
+	```bash
+	git clone https://github.com/Sillar-codes/banking-portal-backend.git
+	cd banking-portal-backend
+	```
 
-![project](https://github.com/abhi9720/BankingPortal-API/assets/68281476/45bca1e0-0af2-4d63-a8d0-efd7b67df6bf)
+2. Copy the sample config and update values
 
-## Error Handling
+	```bash
+	cp src/main/resources/application.properties.sample src/main/resources/application.properties
+	# then edit application.properties to set DB credentials, mail settings, jwt.secret, etc.
+	```
 
-The API implements global exception handling for common error scenarios, such as account not found, unauthorized access, and insufficient balance.
+3. Build and run (using Maven wrapper)
 
-## How to Contribute
+	```bash
+	# build
+	./mvnw clean package -DskipTests
 
-We welcome and encourage developers to contribute to the project and help us make it even better. If you are interested in contributing, follow these steps:
+	# run
+	./mvnw spring-boot:run
+	```
 
-👉🏻**Fork the Repository**: Click on the "Fork" button on the top right corner of the GitHub repository page. This will create a copy of the repository in your GitHub account.
+	Or using an installed Maven:
 
-👉🏻**Clone the Forked Repository**: Open your terminal or command prompt and use the following command to clone the repository to your local machine:
+	```bash
+	mvn clean package -DskipTests
+	mvn spring-boot:run
+	```
 
-   ```sh
-   git clone https://github.com/your-username/BankingPortal-API.git
-   ```
+The application default port in the sample is 8180; change `server.port` in `application.properties` if needed.
 
-   Replace `your-username` with your GitHub username.
+## Configuration
 
-👉🏻**Create a New Branch**: Move into the project directory using `cd BankingPortal-API` and create a new branch for your changes:
+Primary sample config is at `src/main/resources/application.properties.sample`. Important keys to review:
 
-   ```sh
-   git checkout -b feature/your-new-feature
-   ```
+- `spring.datasource.url` — JDBC URL for your database (sample: `jdbc:mysql://localhost:3306/bankingapp`)
+- `spring.datasource.username` / `spring.datasource.password`
+- `spring.jpa.hibernate.ddl-auto` — sample uses `update` for development
+- JWT settings:
+  - `jwt.secret` — set a secure secret for signing tokens
+  - `jwt.expiration` — milliseconds until token expiry
+  - `jwt.header` / `jwt.prefix`
+- Mail settings (`spring.mail.*`) — required for email flows (password reset, OTP by email)
+- Geolocation API (`geo.api.url` / `geo.api.key`) — used by geolocation features
 
-   Replace `your-new-feature` with a descriptive name for your contribution.
+Keep secrets (JWT secret, mail password) out of source control. Use environment variables or external config in production.
 
-👉🏻**Make Changes**: Now, make the desired changes to the codebase using your favorite code editor.
+## API documentation
 
-👉🏻**Commit Changes**: After making the changes, save your work and commit the changes with a meaningful commit message:
+SpringDoc OpenAPI is included. After the app is running, visit:
 
-   ```sh
-   git add .
-   git commit -m "Add your commit message here"
-   ```
+- Swagger UI: http://localhost:8180/swagger-ui.html or http://localhost:8180/swagger-ui/index.html
+- OpenAPI JSON: http://localhost:8180/v3/api-docs
 
-👉🏻**Push Changes**: Push your changes to your forked repository:
+Check the controllers under `src/main/java/com/webapp/bankingportal/controller` for available endpoints and request/response DTOs.
 
-   ```sh
-   git push origin feature/your-new-feature
-   ```
+## Testing
 
-👉🏻**Create a Pull Request**: Go to your forked repository on GitHub, and you'll see a "Compare & Pull Request" button. Click on it to create a new pull request.
+Run unit/integration tests with Maven:
 
-👉🏻**Wait for Review**: Your pull request will be reviewed by the project maintainers. Make any necessary changes based on their feedback.
+```bash
+./mvnw test
+```
 
-**👏🏻👏🏻 Congratulations! 🎉🎊** Your contribution has been accepted and merged into the main repository. You are now a contributor to the project.
+There are test classes under `src/test/java/com/webapp/bankingportal` covering controllers and services.
+
+## Postman collection
+
+There's a Postman collection in the repository root: `Banking Portal.postman_collection.json`. Import it into Postman to exercise the endpoints.
+
+## Contributing
+
+See `CONTRIBUTING.md` for contribution guidelines. Keep changes small, write tests for new behavior and ensure existing tests pass.
+
+## Notes & Development tips
+
+- The project uses Lombok — enable annotation processing in your IDE.
+- MapStruct is used for mapping DTOs — ensure annotation processing is enabled so generated mappers compile.
+- The sample `application.properties.sample` sets `spring.jpa.hibernate.ddl-auto=update` which is OK for development but not recommended for production.
+
+## License
+
+This project is licensed under the terms in the repository root. See the `LICENSE` file.
+
+---
+
+If you'd like, I can also:
+
+- Add a short developer checklist (How to add a new API, testing checklist)
+- Create a Docker compose snippet showing MySQL + the app
+- Run a quick Maven build in this environment to verify compilation
+
+If you want any of those, tell me which and I'll proceed.
+

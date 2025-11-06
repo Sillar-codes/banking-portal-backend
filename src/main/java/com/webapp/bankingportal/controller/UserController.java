@@ -51,7 +51,7 @@ public class UserController {
         return userService.login(loginRequest, request);
     }
 
-    @GetMapping("/generate-otp")
+    @PostMapping("/generate-otp")
     public ResponseEntity<String> generateOtp(@RequestBody OtpRequest otpRequest) {
         return userService.generateOtp(otpRequest);
     }

@@ -31,12 +31,6 @@ public class Account {
     @NotEmpty
     private String accountType = "Savings";
 
-    private String accountStatus;
-    private double balance;
-    private String branch = "NIT";
-    private String ifscCode = "NIT001";
-    private String Pin;
-
     @NotNull
     @OneToOne
     @JoinColumn(name = "user_id")

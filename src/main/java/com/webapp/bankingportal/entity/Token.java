@@ -39,10 +39,4 @@ public class Token {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    public Token(String token, Date expiryAt, Account account) {
-        this.token = token;
-        this.expiryAt = expiryAt;
-        this.account = account;
-    }
-
 }

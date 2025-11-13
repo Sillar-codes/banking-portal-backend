@@ -9,6 +9,4 @@ import com.webapp.bankingportal.entity.OtpInfo;
 public interface OtpInfoRepository extends JpaRepository<OtpInfo, Long> {
 
     OtpInfo findByAccountNumberAndOtp(String accountNumber, String otp);
-
-    OtpInfo findByAccountNumber(String accountNumber);
 }

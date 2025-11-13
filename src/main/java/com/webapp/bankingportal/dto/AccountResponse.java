@@ -17,12 +17,4 @@ public class AccountResponse {
     private String branch;
     private String ifscCode;
 
-    public AccountResponse(Account account) {
-        this.accountNumber = account.getAccountNumber();
-        this.balance = account.getBalance();
-        this.accountType = account.getAccountType();
-        this.branch = account.getBranch();
-        this.ifscCode = account.getIfscCode();
-    }
-
 }

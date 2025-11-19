@@ -32,6 +32,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
      * @throws IOException      If an input or output exception occurs
      * @throws ServletException If a servlet exception occurs
      */
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException, ServletException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().println("Access Denied !! " + authException.getMessage());
+    }   
     
 
 }

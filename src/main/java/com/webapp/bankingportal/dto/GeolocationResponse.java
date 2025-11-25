@@ -70,19 +70,6 @@ public class GeolocationResponse {
     }
 
     @Data
-    public static class Subdivision {
-
-        @JsonProperty("geoname_id")
-        private int geonameId;
-
-        @JsonProperty("iso_code")
-        private String isoCode;
-
-        private Map<String, String> names;
-
-    }
-
-    @Data
     public static class Traits {
 
         @JsonProperty("autonomous_system_number")
